@@ -70,10 +70,30 @@ hr.rule{border:none;border-top:2px solid var(--blue);margin:0 0 24px;}
 }
 .filter-group{display:flex;flex-direction:column;gap:6px;}
 .filter-group label{font-size:11px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;}
-.filter-group select{
-  padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:#fafbfd;
-  font-size:13px;font-family:inherit;min-width:170px;color:var(--ink);
+.multiselect{position:relative;}
+.ms-toggle{
+  padding:8px 30px 8px 12px;border-radius:8px;border:1px solid var(--line);background:#fafbfd;
+  font-size:13px;font-family:inherit;min-width:170px;text-align:left;color:var(--ink);cursor:pointer;
+  position:relative;
 }
+.ms-toggle::after{
+  content:"";position:absolute;right:12px;top:50%;transform:translateY(-60%);
+  border:5px solid transparent;border-top-color:var(--mute);
+}
+.ms-toggle:hover{border-color:var(--blue);}
+.ms-panel{
+  display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:30;
+  background:#fff;border:1px solid var(--line);border-radius:10px;
+  box-shadow:0 10px 28px rgba(20,33,61,.14);min-width:220px;max-width:280px;padding:8px;
+}
+.ms-panel.open{display:block;}
+.ms-actions{display:flex;justify-content:space-between;padding:2px 6px 8px;margin-bottom:6px;border-bottom:1px solid var(--line);}
+.ms-actions button{background:none;border:none;color:var(--blue);cursor:pointer;font-size:12px;font-weight:700;padding:0;}
+.ms-actions button:hover{text-decoration:underline;}
+.ms-options{max-height:220px;overflow-y:auto;}
+.ms-option{display:flex;align-items:center;gap:8px;padding:6px 8px;font-size:13px;border-radius:6px;cursor:pointer;color:var(--ink);}
+.ms-option:hover{background:var(--bg);}
+.ms-option input{accent-color:var(--blue);width:14px;height:14px;flex:none;}
 .reset-btn{
   margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:8px;
   padding:9px 16px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;
@@ -155,15 +175,33 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="filters">
     <div class="filter-group">
       <label>Brand</label>
-      <select id="f-brand"><option value="">All Brands</option></select>
+      <div class="multiselect" id="ms-brand">
+        <button type="button" class="ms-toggle">All Brands</button>
+        <div class="ms-panel">
+          <div class="ms-actions"><button type="button" class="ms-all">Select all</button><button type="button" class="ms-clear">Clear</button></div>
+          <div class="ms-options"></div>
+        </div>
+      </div>
     </div>
     <div class="filter-group">
       <label>Category</label>
-      <select id="f-category"><option value="">All Categories</option></select>
+      <div class="multiselect" id="ms-category">
+        <button type="button" class="ms-toggle">All Categories</button>
+        <div class="ms-panel">
+          <div class="ms-actions"><button type="button" class="ms-all">Select all</button><button type="button" class="ms-clear">Clear</button></div>
+          <div class="ms-options"></div>
+        </div>
+      </div>
     </div>
     <div class="filter-group">
       <label>Condition</label>
-      <select id="f-condition"><option value="">All Conditions</option></select>
+      <div class="multiselect" id="ms-condition">
+        <button type="button" class="ms-toggle">All Conditions</button>
+        <div class="ms-panel">
+          <div class="ms-actions"><button type="button" class="ms-all">Select all</button><button type="button" class="ms-clear">Clear</button></div>
+          <div class="ms-options"></div>
+        </div>
+      </div>
     </div>
     <div class="filter-count">Showing <b id="filter-count-val">—</b> listings</div>
     <button class="reset-btn" id="reset-btn">Reset filters</button>
@@ -233,24 +271,86 @@ function median(arr){
 }
 function mean(arr){ return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
 
-function populateSelect(id, values){
-  const sel = document.getElementById(id);
+function initMultiselect(containerId, values, allLabel){
+  const container = document.getElementById(containerId);
+  const toggle = container.querySelector(".ms-toggle");
+  const panel = container.querySelector(".ms-panel");
+  const optionsWrap = container.querySelector(".ms-options");
+  const selectAllBtn = container.querySelector(".ms-all");
+  const clearBtn = container.querySelector(".ms-clear");
+  const selected = new Set();
+
   values.forEach(v=>{
-    const opt = document.createElement("option");
-    opt.value = v; opt.textContent = v;
-    sel.appendChild(opt);
+    const label = document.createElement("label");
+    label.className = "ms-option";
+    const cb = document.createElement("input");
+    cb.type = "checkbox"; cb.value = v;
+    const span = document.createElement("span");
+    span.textContent = v;
+    label.appendChild(cb); label.appendChild(span);
+    optionsWrap.appendChild(label);
   });
+
+  function updateLabel(){
+    if(selected.size===0 || selected.size===values.length){
+      toggle.textContent = allLabel;
+    } else if(selected.size===1){
+      toggle.textContent = [...selected][0];
+    } else {
+      toggle.textContent = `${selected.size} selected`;
+    }
+  }
+
+  optionsWrap.addEventListener("change", e=>{
+    if(e.target.matches("input[type=checkbox]")){
+      if(e.target.checked) selected.add(e.target.value); else selected.delete(e.target.value);
+      updateLabel();
+      applyFilters();
+    }
+  });
+
+  selectAllBtn.addEventListener("click", ()=>{
+    optionsWrap.querySelectorAll("input").forEach(cb=>{ cb.checked = true; selected.add(cb.value); });
+    updateLabel(); applyFilters();
+  });
+  clearBtn.addEventListener("click", ()=>{
+    optionsWrap.querySelectorAll("input").forEach(cb=>{ cb.checked = false; });
+    selected.clear();
+    updateLabel(); applyFilters();
+  });
+
+  toggle.addEventListener("click", (e)=>{
+    e.stopPropagation();
+    document.querySelectorAll(".ms-panel.open").forEach(p=>{ if(p!==panel) p.classList.remove("open"); });
+    panel.classList.toggle("open");
+  });
+  panel.addEventListener("click", e=>e.stopPropagation());
+
+  updateLabel();
+  return {
+    getSelected: () => selected,
+    reset: () => {
+      selected.clear();
+      optionsWrap.querySelectorAll("input").forEach(cb=>cb.checked=false);
+      updateLabel();
+    }
+  };
 }
-populateSelect("f-brand", DATA.brands);
-populateSelect("f-category", DATA.categories);
-populateSelect("f-condition", DATA.conditions);
+
+document.addEventListener("click", ()=>{
+  document.querySelectorAll(".ms-panel.open").forEach(p=>p.classList.remove("open"));
+});
+
+const msBrand = initMultiselect("ms-brand", DATA.brands, "All Brands");
+const msCategory = initMultiselect("ms-category", DATA.categories, "All Categories");
+const msCondition = initMultiselect("ms-condition", DATA.conditions, "All Conditions");
 
 function getFiltered(){
-  const b = document.getElementById("f-brand").value;
-  const c = document.getElementById("f-category").value;
-  const cond = document.getElementById("f-condition").value;
+  const b = msBrand.getSelected();
+  const c = msCategory.getSelected();
+  const cond = msCondition.getSelected();
   return DATA.listings.filter(r =>
-    (!b || r.brand===b) && (!c || r.category===c) && (!cond || r.condition===cond)
+    (b.size===0 || b.has(r.brand)) && (c.size===0 || c.has(r.category)) && (cond.size===0 || cond.has(r.condition))
   );
 }
 
@@ -406,13 +506,8 @@ function applyFilters(){
   renderBrandPrice(filtered);
 }
 
-["f-brand","f-category","f-condition"].forEach(id=>{
-  document.getElementById(id).addEventListener("change", applyFilters);
-});
 document.getElementById("reset-btn").addEventListener("click", ()=>{
-  document.getElementById("f-brand").value = "";
-  document.getElementById("f-category").value = "";
-  document.getElementById("f-condition").value = "";
+  msBrand.reset(); msCategory.reset(); msCondition.reset();
   applyFilters();
 });
 
