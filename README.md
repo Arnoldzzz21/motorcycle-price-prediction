@@ -9,7 +9,7 @@ Predicting the resale price of used motorcycles from brand, category, year, cond
 | **Goal** | Predict the price of a used motorcycle listing |
 | **Data** | ~7,600 real motorcycle listings scraped from a marketplace (BMW, Ducati, KTM, Royal Enfield, Suzuki, Yamaha) |
 | **Stack** | Python, Pandas, NumPy, Matplotlib, Seaborn, Plotly, Scikit-learn, XGBoost |
-| **Best model** | XGBoost (tuned) — RMSE **$4,554**, R² **0.606** |
+| **Best model** | XGBoost (tuned) — RMSE **$4,627**, R² **0.595** |
 
 ## Project workflow
 
@@ -24,7 +24,7 @@ Predicting the resale price of used motorcycles from brand, category, year, cond
 
 | Model | RMSE | R² |
 |---|---|---|
-| **XGBoost (tuned)** | **$4,554** | **0.606** |
+| **XGBoost (tuned)** | **$4,627** | **0.595** |
 | Random Forest (tuned) | higher | lower |
 | Gradient Boosting | higher | lower |
 | Linear Regression | higher | lower |
