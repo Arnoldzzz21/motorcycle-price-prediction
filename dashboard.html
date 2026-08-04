@@ -65,16 +65,26 @@ hr.rule{border:none;border-top:2px solid var(--blue);margin:0 0 24px;}
 .kpi-value{font-size:19px;font-weight:700;color:var(--ink);}
 
 .filters{
-  background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;
-  display:flex;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap;
+  display:flex;align-items:stretch;gap:16px;margin-bottom:22px;flex-wrap:wrap;
 }
-.filter-group{display:flex;flex-direction:column;gap:6px;}
-.filter-group label{font-size:11px;font-weight:700;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;}
+.filter-group{
+  display:flex;flex-direction:column;gap:8px;
+  padding:12px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--card);
+}
+.filter-group label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+.filter-group.c-blue{border-color:var(--blue);background:var(--blue-soft);}
+.filter-group.c-blue label{color:var(--blue);}
+.filter-group.c-purple{border-color:var(--purple);background:var(--purple-soft);}
+.filter-group.c-purple label{color:var(--purple);}
+.filter-group.c-orange{border-color:var(--orange);background:var(--orange-soft);}
+.filter-group.c-orange label{color:var(--orange);}
+.filter-group.c-green{border-color:var(--green);background:var(--green-soft);}
+.filter-group.c-green label{color:var(--green);}
 .multiselect{position:relative;}
 .ms-toggle{
-  padding:8px 30px 8px 12px;border-radius:8px;border:1px solid var(--line);background:#fafbfd;
+  padding:9px 30px 9px 12px;border-radius:9px;border:1px solid rgba(20,33,61,.08);background:#fff;
   font-size:13px;font-family:inherit;min-width:170px;text-align:left;color:var(--ink);cursor:pointer;
-  position:relative;
+  position:relative;box-shadow:0 1px 2px rgba(20,33,61,.05);
 }
 .ms-toggle::after{
   content:"";position:absolute;right:12px;top:50%;transform:translateY(-60%);
@@ -95,11 +105,11 @@ hr.rule{border:none;border-top:2px solid var(--blue);margin:0 0 24px;}
 .ms-option:hover{background:var(--bg);}
 .ms-option input{accent-color:var(--blue);width:14px;height:14px;flex:none;}
 .reset-btn{
-  margin-left:auto;background:#fff;border:1px solid var(--line);border-radius:8px;
+  margin-left:auto;align-self:center;background:#fff;border:1px solid var(--line);border-radius:8px;
   padding:9px 16px;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer;
 }
 .reset-btn:hover{border-color:var(--blue);color:var(--blue);}
-.filter-count{font-size:13px;color:var(--mute);}
+.filter-count{font-size:13px;color:var(--mute);align-self:center;}
 .filter-count b{color:var(--blue);}
 
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
@@ -173,7 +183,7 @@ footer a{color:var(--blue);text-decoration:none;}
   </div>
 
   <div class="filters">
-    <div class="filter-group">
+    <div class="filter-group c-blue">
       <label>Brand</label>
       <div class="multiselect" id="ms-brand">
         <button type="button" class="ms-toggle">All Brands</button>
@@ -183,7 +193,7 @@ footer a{color:var(--blue);text-decoration:none;}
         </div>
       </div>
     </div>
-    <div class="filter-group">
+    <div class="filter-group c-purple">
       <label>Category</label>
       <div class="multiselect" id="ms-category">
         <button type="button" class="ms-toggle">All Categories</button>
@@ -193,7 +203,7 @@ footer a{color:var(--blue);text-decoration:none;}
         </div>
       </div>
     </div>
-    <div class="filter-group">
+    <div class="filter-group c-orange">
       <label>Condition</label>
       <div class="multiselect" id="ms-condition">
         <button type="button" class="ms-toggle">All Conditions</button>
