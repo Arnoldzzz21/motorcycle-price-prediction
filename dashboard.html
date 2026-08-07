@@ -233,7 +233,7 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="grid">
     <div class="card">
       <h3><span class="dot purple"></span>Model Comparison</h3>
-      <p class="card-sub">Test RMSE across all 4 models — lower is better.</p>
+      <p class="card-sub">Test RMSE across all 4 models — lower is better. Fixed metric, unaffected by the filters above.</p>
       <div class="chart-wrap"><canvas id="chart-model-comp"></canvas></div>
     </div>
     <div class="card">
@@ -246,12 +246,12 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="grid">
     <div class="card">
       <h3><span class="dot pink"></span>Predicted vs. Actual</h3>
-      <p class="card-sub">Each point is one test-set motorcycle. Closer to the diagonal = better prediction.</p>
+      <p class="card-sub">Each point is one test-set motorcycle. Closer to the diagonal = better prediction. Fixed metric, unaffected by the filters above.</p>
       <div class="chart-wrap tall"><canvas id="chart-pva"></canvas></div>
     </div>
     <div class="card">
       <h3><span class="dot blue"></span>Prediction Error by Brand</h3>
-      <p class="card-sub">Mean absolute error (MAE) on the test set, by brand.</p>
+      <p class="card-sub">Mean absolute error (MAE) on the test set, by brand. Updates with the Brand filter above.</p>
       <div class="chart-wrap tall"><canvas id="chart-error-brand"></canvas></div>
     </div>
   </div>
@@ -484,7 +484,9 @@ function renderPva(){
 }
 
 function renderErrorByBrand(){
-  const rows = DATA.error_by_brand;
+  const sel = msBrand.getSelected();
+    const rows = DATA.error_by_brand.filter(r => sel.size===0 || sel.has(r.brand));
+    if(chartErrorBrand) chartErrorBrand.destroy();
   chartErrorBrand = new Chart(document.getElementById("chart-error-brand"), {
     type:"bar",
     data:{ labels: rows.map(r=>r.brand), datasets:[{ data: rows.map(r=>r.mae), backgroundColor:"#2f6fed", borderRadius:4 }] },
@@ -514,6 +516,7 @@ function applyFilters(){
   renderKpis(filtered);
   renderPriceDist(filtered);
   renderBrandPrice(filtered);
+  renderErrorByBrand();
 }
 
 document.getElementById("reset-btn").addEventListener("click", ()=>{
