@@ -140,21 +140,21 @@ def feature_groups(columns) -> dict:
     mapping = {}
     for c in columns:
         if c.startswith("brand_"):
-            mapping[c] = "Marca"
+            mapping[c] = "Brand"
         elif c.startswith("category_grouped_"):
-            mapping[c] = "Categoría"
+            mapping[c] = "Category"
         elif c.startswith("condition_"):
-            mapping[c] = "Condición (nuevo/usado)"
+            mapping[c] = "Condition (new/used)"
         elif c == "bike_age":
-            mapping[c] = "Antigüedad de la moto"
+            mapping[c] = "Bike age"
         elif c == "mileage":
-            mapping[c] = "Kilometraje"
+            mapping[c] = "Mileage"
         elif c == "mileage_per_year":
-            mapping[c] = "Kilometraje por año"
+            mapping[c] = "Mileage per year"
         elif c == "has_description":
-            mapping[c] = "Tiene descripción"
+            mapping[c] = "Has description"
         elif c == "description_length":
-            mapping[c] = "Longitud de la descripción"
+            mapping[c] = "Description length"
         else:
             mapping[c] = c
     return mapping
