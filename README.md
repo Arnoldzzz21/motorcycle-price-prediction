@@ -16,17 +16,17 @@ Predicting the resale price of used motorcycles from brand, category, year, cond
 `app.py` is a narrative Streamlit app that replaces the old static `dashboard.html`. It trains live
 (cached) straight from the raw CSVs in `data/`, and walks through the full story:
 
-1. **Datos y EDA** — price distribution, price by brand/category, feature engineering notes.
-2. **Modelos** — Linear Regression, Random Forest, Gradient Boosting, and XGBoost (tuned via
+1. **Data and EDA** — price distribution, price by brand/category, feature engineering notes.
+2. **Models** — Linear Regression, Random Forest, Gradient Boosting, and XGBoost (tuned via
    `RandomizedSearchCV`), compared on the same test set.
-3. **Interpretabilidad (SHAP)** — global feature importance, plus a deep dive into the model's worst
+3. **Interpretability (SHAP)** — global feature importance, plus a deep dive into the model's worst
    single miss: a $99,950 Ducati Diavel 1260 Lamborghini (a limited-edition collab bike) predicted at
    $21K. SHAP shows the model *does* recognize "Ducati" and "Sportbike" as premium signals — it just
    has no feature that captures this specific listing is a rare special edition, because the exact
    model name was dropped during feature engineering.
-4. **Probar el modelo** — build a hypothetical listing and get a live prediction with its own SHAP
+4. **Test the model** — build a hypothetical listing and get a live prediction with its own SHAP
    waterfall explanation.
-5. **Conclusiones** — business interpretation and recommended next step.
+5. **Conclusions** — business interpretation and recommended next step.
 
 ### Running it locally
 
