@@ -423,3 +423,6 @@ limited edition" flag) to close this specific gap.
         "This interactive dashboard replaces the repository's previous static version "
         "(dashboard.html) — same project, now with full storytelling and live SHAP interpretability."
     )
+
+st.divider()
+st.caption("Developed by **Arnoldo Cuéllar** · [GitHub](https://github.com/Arnoldzzz21)")
