@@ -7,7 +7,7 @@ Predicting the resale price of used motorcycles from brand, category, year, cond
 | | |
 |---|---|
 | **Goal** | Predict the price of a used motorcycle listing |
-| **Data** | ~7,600 real motorcycle listings scraped from a marketplace (BMW, Ducati, KTM, Royal Enfield, Suzuki, Yamaha) |
+| **Data** | 7,600 real motorcycle listings scraped from a marketplace (BMW, Ducati, KTM, Royal Enfield, Suzuki, Yamaha) |
 | **Stack** | Python, Pandas, NumPy, Scikit-learn, XGBoost, SHAP, Plotly, Streamlit |
 | **Best model** | XGBoost (tuned) — RMSE ≈ $4,600–4,700, R² ≈ 0.58–0.60 (varies slightly run to run) |
 
