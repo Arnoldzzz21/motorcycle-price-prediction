@@ -80,6 +80,6 @@ motorcycle-price-prediction/
 
 - Re-introduce a grouped version of the `model` column (e.g. a "premium tier" flag) to close the gap on rare, high-value motorcycles — the SHAP section quantifies exactly why this gap exists.
 
-## Author
+## Live App
 
-**Arnoldo** — [github.com/Arnoldzzz21](https://github.com/Arnoldzzz21)
+View it here: https://arnoldzzz21-motorcycle-price-prediction.streamlit.app/
