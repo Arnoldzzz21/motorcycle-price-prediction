@@ -1,6 +1,6 @@
 # Motorcycle Price Prediction
 
-Predicting the resale price of used motorcycles from brand, category, year, condition, and mileage — a regression project built on ~7,600 real marketplace listings across six brands.
+Predicting the resale price of used motorcycles from brand, category, year, condition, and mileage — a regression project built on 7,600 real marketplace listings across six brands.
 
 ## Overview
 
@@ -21,7 +21,7 @@ Predicting the resale price of used motorcycles from brand, category, year, cond
    `RandomizedSearchCV`), compared on the same test set.
 3. **Interpretabilidad (SHAP)** — global feature importance, plus a deep dive into the model's worst
    single miss: a $99,950 Ducati Diavel 1260 Lamborghini (a limited-edition collab bike) predicted at
-   ~$21K. SHAP shows the model *does* recognize "Ducati" and "Sportbike" as premium signals — it just
+   $21K. SHAP shows the model *does* recognize "Ducati" and "Sportbike" as premium signals — it just
    has no feature that captures this specific listing is a rare special edition, because the exact
    model name was dropped during feature engineering.
 4. **Probar el modelo** — build a hypothetical listing and get a live prediction with its own SHAP
