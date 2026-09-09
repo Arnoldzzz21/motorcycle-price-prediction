@@ -164,7 +164,7 @@ test_r2 = r2_score(y_test, y_pred_test)
 # ----------------------------------------------------------------- Header --
 st.title("🏍️ Motorcycle Price Prediction")
 st.caption(
-    "Predicting the resale price of used motorcycles — ~7,600 real listings across six brands "
+    "Predicting the resale price of used motorcycles — 7,600 real listings across six brands "
     "(BMW, Ducati, KTM, Royal Enfield, Suzuki, Yamaha). Narrative app with SHAP interpretability."
 )
 
